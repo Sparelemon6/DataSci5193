@@ -1,0 +1,35 @@
+name: Check for Dependency Updates
+
+on:
+  schedule:
+    - cron: '0 * * * *' # Run every hour
+  workflow_dispatch: # Allow manual runs
+jobs:
+  check-dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install pip-tools
+        run: pip install pip-tools
+
+      - name: Check for Dependency Updates
+        run: pip list --outdated > outdated.txt
+
+      - name: Create a Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: "Updated dependencies in requirements.txt"
+          branch: dependency-updates
+          title: "Dependency Updates"
+          body: |
+            The following dependencies are outdated:
+            ```
+            $(cat outdated.txt)
+            ```
