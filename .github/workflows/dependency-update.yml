@@ -1,4 +1,4 @@
-name: Dependency Updates
+    name: Dependency Updates
 on:
   schedule:
     - cron: '0 0 * * 0' # Run every hour
@@ -28,7 +28,7 @@ jobs:
       - name: Create a Pull Request
         uses: peter-evans/create-pull-request@v5
         with:
-          token: ${{ secrets.GITHUB_TOKEN }} # Use GitHub-provided token
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }} # Use the PAT
           commit-message: "Updated dependencies in requirements.txt"
           branch: dependency-updates
           title: "Dependency Updates"
@@ -37,3 +37,4 @@ jobs:
             ```
             $(cat outdated.txt)
             ```
+
