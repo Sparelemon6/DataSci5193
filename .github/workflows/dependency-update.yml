@@ -28,6 +28,7 @@ jobs:
       - name: Create a Pull Request
         uses: peter-evans/create-pull-request@v5
         with:
+          token: ${{ secrets.GITHUB_TOKEN }} # Use GitHub-provided token
           commit-message: "Updated dependencies in requirements.txt"
           branch: dependency-updates
           title: "Dependency Updates"
